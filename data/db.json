@@ -1,0 +1,39 @@
+{
+  "records": [
+    {
+      "title": "New Record II",
+      "artist": "Vince Staples",
+      "year": 2021,
+      "price": 15,
+      "id": "4999306d-47b1-49a4-b4e4-e5b36de690ed"
+    },
+    {
+      "title": "Update My Record",
+      "artist": "STILL Jonny Shine",
+      "year": 2021,
+      "price": 19,
+      "id": "44f3e3e7-658c-4960-bc0c-2e5c140c2bc9"
+    },
+    {
+      "title": "My Record",
+      "artist": "Jonny Shine",
+      "year": 2021,
+      "price": 19,
+      "id": "3d10fc9e-789c-4730-85bd-365590b78fce"
+    },
+    {
+      "title": "My NEW Record",
+      "artist": "Jonny Shine",
+      "year": 2021,
+      "price": 19,
+      "id": "5a770807-1d1d-46e2-8b95-dd41661fb185"
+    },
+    {
+      "title": "My NEWEST Record",
+      "artist": "Jonny Shine",
+      "year": 2021,
+      "price": 19,
+      "id": "e80806f5-8dd3-4893-98a2-b6578ea23566"
+    }
+  ]
+}
