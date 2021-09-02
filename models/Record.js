@@ -5,6 +5,34 @@ const { Schema, model } = mongoose;
 
 
 // SCHEMA -------------------------------------------
+const AddressSchema = new Schema({
+    street: {
+        type: String,
+        required: true
+    },
+    city: {
+        type: String,
+        required: true
+    },
+    streetNo: {
+        type: String,
+        required: true
+    },
+    country: {
+        type: String,
+        required: true
+    },
+    postalCode: {
+        type: String,
+        required: true
+    }
+},
+{
+    _id: false,
+    versionKey: false
+});
+
+
 const RecordSchema = new Schema({
     cover: {
         type: String,
@@ -26,7 +54,8 @@ const RecordSchema = new Schema({
     year: {
         type: Number,
         required: true
-    }
+    },
+    address: AddressSchema
 },
 {
     versionKey: false,

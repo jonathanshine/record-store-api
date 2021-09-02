@@ -47,7 +47,7 @@ import faker from 'faker';
             const userData = {
                 username: faker.internet.userName(),
                 email: faker.internet.email(),
-                password: "0123456789",
+                password: faker.internet.password(),
                 firstName: faker.name.firstName(),
                 lastName: faker.name.lastName(),
                 birthday: faker.date.between("1970", "2005")
