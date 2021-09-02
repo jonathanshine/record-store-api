@@ -77,10 +77,10 @@ import faker from 'faker';
                 title: faker.name.firstName() + " " + faker.name.jobType(),
                 artist: faker.name.lastName() + " " + faker.name.jobDescriptor(),
                 price: faker.commerce.price(10, 100, 2),
-                year: faker.date.between("1900", "2020")
+                year: faker.date.between("1900", "2020").getFullYear()
             };
             
-            console.log(`Record ${recordData.title} by ${recordData.artist} from ${recordData.year.getFullYear()} has been created`);
+            console.log(`Record ${recordData.title} by ${recordData.artist} from ${recordData.year} has been created`);
     
             const record = new Record( recordData );
             return record.save();
@@ -97,4 +97,5 @@ import faker from 'faker';
         };
 
     // Close the connection to the DB
+    mongoose.connection.close();
 })();
