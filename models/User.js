@@ -13,28 +13,52 @@ const UserSchema = new Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
         type: String,
         required: true
     },
-    firstname: {
+    firstName: {
         type: String,
         required: true
     },
-    lastname: {
+    lastName: {
         type: String,
         required: true
     },
     avatar: {
         type: String,
         required: true
+    },
+    birthday: {
+        type: Date,
+        required: false
     }
 },
 {
     versionKey: false,
-    timestamps: true
+    timestamps: true,
+    id: false,
+    toJSON: {
+        virtuals: true
+    }
+});
+// --------------------------------------------------
+
+
+
+// VIRTUALS -----------------------------------------
+UserSchema.virtual("fullName").get(function() {
+    return `${this.firstName} ${this.lastName}`;
+});
+
+UserSchema.virtual("age").get(function() {
+    if (this.birthday) {
+    const dateInMil = new Date() - this.birthday;
+    return Math.floor( dateInMil / 31536000000 );
+    };
 });
 // --------------------------------------------------
 

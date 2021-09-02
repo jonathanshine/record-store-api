@@ -30,7 +30,10 @@ app.use( express.json() );
 
 // INITIAL ENDPOINT ---------------------------------
 app.get('/', (req, res) => {
-  res.send('Welcome to the Record Store API!')
+  res.send(`<h1>Welcome to the Record Store API!</h1>
+  <div><a href="/users">/users</a></div>
+  <div><a href="/records">/records</a></div>
+  `)
 });
 
 

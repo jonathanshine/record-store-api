@@ -5,7 +5,7 @@ import User from '../models/User.js';
 
 export const getUsers = async (req, res, next) => {
     try {
-        const users = await User.find();
+        const users = await User.find().sort("lastName").select("-password");
         res.json( users );
     } catch (error) {
         next( error );
@@ -15,7 +15,7 @@ export const getUsers = async (req, res, next) => {
 export const getUser = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const user = await User.findById( id );
+        const user = await User.findById( id ).select("-password");
         if(!user) throw new createError(404, `No user with id --> ${id} was found`);
         res.json( user );
     } catch (error) {
@@ -27,6 +27,7 @@ export const createUser = async (req, res, next)=> {
     try {
         const body = req.body;
         const user = await User.create( body );
+        user.password = undefined;
         res.json( user );
     } catch (error) {
         next( error );
