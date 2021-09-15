@@ -2,9 +2,12 @@
 import mongoose from 'mongoose';
 import User from '../models/User.js';
 import Record from '../models/Record.js';
+import Order from '../models/Order.js';
 import faker from 'faker';
 // --------------------------------------------------
 
+let usersCreated = [];
+let recordsCreated = [];
 
 (async function() {
     // MONGOOSE CONFIG ----------------------------------
@@ -24,6 +27,7 @@ import faker from 'faker';
     try {
         await User.deleteMany( {} );
         console.log("All users have been deleted");
+        console.log("---------------------------");
     } catch (error) {
         console.log( error );
     };
@@ -34,11 +38,19 @@ import faker from 'faker';
     try {
         await Record.deleteMany( {} );
         console.log("All records have been deleted");
+        console.log("---------------------------");
     } catch (error) {
         console.log( error );
     };
 
-
+    // Delete all orders
+    try {
+        await Order.deleteMany( {} );
+        console.log("All orders have been deleted");
+        console.log("---------------------------");
+    } catch (error) {
+        console.log( error );
+    };
 
     // Create 20 fake users
     const userPromises = Array(20)
@@ -60,7 +72,7 @@ import faker from 'faker';
         });
 
         try {
-            await Promise.all( userPromises );
+            usersCreated = await Promise.all( userPromises );
             console.log("----------------------------------------------");
             console.log(`All 20 fake users have been stored to the DB`);
             console.log("----------------------------------------------");
@@ -88,13 +100,49 @@ import faker from 'faker';
 
 
         try {
-            await Promise.all( recordPromises );
+            recordsCreated = await Promise.all( recordPromises );
             console.log("----------------------------------------------");
             console.log(`All 20 fake records have been stored to the DB`);
             console.log("----------------------------------------------");
         } catch (error) {
             console.log( error );
         };
+
+
+    // Create some orders
+    const userIds = usersCreated.map(user => user._id); // returns an array of only the IDs from usersCreated
+    const recordIds = recordsCreated.map(record => record._id);
+    const  orderPromises = Array(30)
+        .fill(null)
+        .map(() => {
+            const orderData = {
+                userId: faker.random.arrayElement( userIds ),
+                records: [
+                    {
+                        record: faker.random.arrayElement( recordIds ),
+                        quantity: faker.datatype.number( { max: 3 } )
+                    },
+                    {
+                        record: faker.random.arrayElement( recordIds ),
+                        quantity: faker.datatype.number( { max: 3 } )
+                    }
+                ]
+            };
+
+            console.log(`An order from ${orderData.userId} has been created`);
+
+            const order = new Order( orderData );
+            return order.save();
+        });
+
+    try {
+        await Promise.all( orderPromises );
+        console.log("----------------------------------------------");
+            console.log(`All 30 fake orders have been stored to the DB`);
+            console.log("----------------------------------------------");
+    } catch (error) {
+        console.log( error );
+    };
 
     // Close the connection to the DB
     mongoose.connection.close();
