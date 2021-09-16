@@ -120,11 +120,11 @@ let recordsCreated = [];
                 records: [
                     {
                         record: faker.random.arrayElement( recordIds ),
-                        quantity: faker.datatype.number( { max: 3 } )
+                        quantity: faker.datatype.number( { min: 1, max: 3 } )
                     },
                     {
                         record: faker.random.arrayElement( recordIds ),
-                        quantity: faker.datatype.number( { max: 3 } )
+                        quantity: faker.datatype.number({ min: 1, max: 3 })
                     }
                 ]
             };

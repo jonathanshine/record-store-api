@@ -42,7 +42,7 @@ export const updateRecord = async (req, res, next) => {
             id,
             newData,
             { new: true}
-            );
+        );
         if (!record) throw new createError(404, `No record with id --> ${id} was found`);
         res.json( record );
     } catch (error) {

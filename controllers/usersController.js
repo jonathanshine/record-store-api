@@ -63,3 +63,16 @@ export const deleteUser = async (req, res, next) => {
         next( error );
     }
 };
+
+export const loginUser = async (req, res, next) => {
+    try {
+        const { email, password} = req.body;
+        const user = await User.findOne({ email });
+        if (!user) throw new createError(404, `Email not valid`)
+
+        if (user.password !== password) throw new createError(404, `Password not valid`);
+        res.send( user );
+    } catch (error) {
+        next( error );
+    }
+}

@@ -6,7 +6,7 @@ const { Schema, model } = mongoose;
 
 // SCHEMA -------------------------------------------
 const OrderSchema = new Schema({
-    userId: { type: String, required: true },
+    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
     records: [{
         record: {
             type: Schema.Types.ObjectId,
