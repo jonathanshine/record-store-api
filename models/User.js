@@ -5,6 +5,33 @@ const { Schema, model } = mongoose;
 
 
 // SCHEMA -------------------------------------------
+const AddressSchema = new Schema({
+    street: {
+        type: String,
+        required: true
+    },
+    city: {
+        type: String,
+        required: true
+    },
+    streetNo: {
+        type: String,
+        required: true
+    },
+    country: {
+        type: String,
+        required: true
+    },
+    postalCode: {
+        type: String,
+        required: true
+    }
+},
+{
+    _id: false,
+    versionKey: false
+});
+
 const UserSchema = new Schema({
     username: {
         type: String,
@@ -31,7 +58,9 @@ const UserSchema = new Schema({
     birthday: {
         type: Date,
         required: false
-    }
+    },
+    cart: [{ type: Schema.Types.ObjectId, required: false, default: [] }],
+    address: AddressSchema
 },
 {
     versionKey: false,
