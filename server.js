@@ -5,6 +5,7 @@ const port = 5000;
 import recordsRouter from './routes/recordsRouter.js';
 import usersRouter from './routes/usersRouter.js';
 import mongoose from 'mongoose';
+import cors from 'cors';
 import createError from 'http-errors';
 // --------------------------------------------------
 
@@ -25,7 +26,7 @@ mongoose.connect("mongodb://localhost:27017/record-store-api", {
 
 // MIDDLEWARE ---------------------------------------
 app.use( express.json() );
-
+app.use( cors() );
 
 
 // INITIAL ENDPOINT ---------------------------------
