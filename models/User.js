@@ -59,7 +59,11 @@ const UserSchema = new Schema({
         type: Date,
         required: false
     },
-    cart: [{ record: { type: Schema.Types.ObjectId, required: false }, quantity: { type: Number, required: false}
+    cart: [
+        {
+            record: { type: Schema.Types.ObjectId, required: false },
+            quantity: { type: Number, required: false
+        }
     }],
     address: AddressSchema
 },

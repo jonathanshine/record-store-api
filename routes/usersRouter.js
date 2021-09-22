@@ -12,7 +12,13 @@ import {
 
 import { createOrder, deleteOrder, getOrder, getOrders, updateOrder } from '../controllers/ordersControllers.js';
 
-router.route("/").get(getUsers).post(createUser);
+import { userValidationRules, userValidationErrorHandling } from "../middleware/validation/userValidation.js";
+
+router.route("/").get(getUsers).post(
+    userValidationRules(),
+    userValidationErrorHandling,
+    createUser
+);
 router.route("/login").post(loginUser);
 router.route("/:id").get(getUser).delete(deleteUser).put(updateUser);
 router.route("/:id/orders").get(getOrders).post(createOrder);
