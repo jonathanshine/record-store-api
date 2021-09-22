@@ -35,25 +35,34 @@ const AddressSchema = new Schema({
 const UserSchema = new Schema({
     username: {
         type: String,
-        required: true,
+        validate: {
+            validator: async (value) => {
+                const User = mongoose.model("User");
+                const user = await User.findOne({ username: value} );
+                if (user) return false;
+                else return true;
+            },
+            message: props => `${props.value} is already taken!`
+        },
+        required: [ true, "Username name is required" ],
         unique: true
     },
     email: {
         type: String,
-        required: true,
+        required: [ true, "Email name is required" ],
         unique: true
     },
     password: {
         type: String,
-        required: true
+        required: [ true, "Password name is required" ]
     },
     firstName: {
         type: String,
-        required: true
+        required: [ true, "First name is required" ]
     },
     lastName: {
         type: String,
-        required: true
+        required: [ true, "Last name is required" ]
     },
     birthday: {
         type: Date,
