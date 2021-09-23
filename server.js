@@ -7,12 +7,13 @@ import usersRouter from './routes/usersRouter.js';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import createError from 'http-errors';
+import config from "./config/config.js"
 // --------------------------------------------------
 
 
 
 // MONGOOSE CONFIG ----------------------------------
-mongoose.connect("mongodb://localhost:27017/record-store-api", {
+mongoose.connect(config.mongooseURL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
