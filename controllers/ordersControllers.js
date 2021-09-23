@@ -58,7 +58,7 @@ export const createOrder = async (req, res, next) => {
     try {
         const data = req.body;
         const order = await Order.create( data );
-        const populatedOrder = await Order.find({ _id: order._id }).populate("records.record").populate("userId");
+        const populatedOrder = await Order.findOne({ _id: order._id }).populate("records.record").populate("userId");
         res.json( populatedOrder );
     } catch (error) {
         next( error );

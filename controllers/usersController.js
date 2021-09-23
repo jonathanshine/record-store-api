@@ -42,7 +42,7 @@ export const updateUser = async (req, res, next) => {
             id,
             newData,
             { new: true}
-            );
+            ).populate("cart.record");
         if (!user) throw new createError(404, `No user with id --> ${id} was found`);
         res.json( user );
     } catch (error) {
@@ -67,7 +67,7 @@ export const deleteUser = async (req, res, next) => {
 export const loginUser = async (req, res, next) => {
     try {
         const { email, password} = req.body;
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email }).populate("cart.record");
         if (!user) throw new createError(404, `Email not valid`)
 
         if (user.password !== password) throw new createError(404, `Password not valid`);

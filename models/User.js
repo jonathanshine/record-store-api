@@ -70,10 +70,9 @@ const UserSchema = new Schema({
     },
     cart: [
         {
-            record: { type: Schema.Types.ObjectId, required: false },
-            quantity: { type: Number, required: false
-        }
-    }],
+            record: { type: Schema.Types.ObjectId, ref: "Record", required: false },
+            quantity: { type: Number, required: false}
+    }, { _id: false }],
     address: AddressSchema
 },
 {
