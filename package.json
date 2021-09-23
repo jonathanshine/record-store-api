@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.js",
     "prod": "NODE_ENV=production nodemon server.js",
-    "seed": "node seed/seed.js"
+    "seed-local": "node seed/seed.js",
+    "seed-prod": "NODE_ENV=production node seed/seed.js"
   },
   "author": "",
   "license": "ISC",

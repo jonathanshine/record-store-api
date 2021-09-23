@@ -4,6 +4,7 @@ import User from '../models/User.js';
 import Record from '../models/Record.js';
 import Order from '../models/Order.js';
 import faker from 'faker';
+import config from "../config/config.js"
 // --------------------------------------------------
 
 let usersCreated = [];
@@ -11,7 +12,7 @@ let recordsCreated = [];
 
 (async function() {
     // MONGOOSE CONFIG ----------------------------------
-    mongoose.connect("mongodb://localhost:27017/record-store-api", {
+    mongoose.connect(config.mongooseURL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
