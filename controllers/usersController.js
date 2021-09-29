@@ -1,6 +1,7 @@
 // IMPORTS ------------------------------------------
 import createError from 'http-errors';
 import User from '../models/User.js';
+import config from '../config/config.js';
 // --------------------------------------------------
 
 export const getUsers = async (req, res, next) => {
@@ -76,8 +77,8 @@ export const loginUser = async (req, res, next) => {
         res.cookie("token", token, {
             httpOnly: true,
             expires: new Date(Date.now() + 172800000),
-            sameSite: "lax",
-            secure: false
+            sameSite: config.env == "production" ? "None" : "lax",
+            secure: config.env == "production" ? true : false
         } ).send( user );
     } catch (error) {
         next( error );
