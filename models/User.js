@@ -114,6 +114,23 @@ UserSchema.methods.generateAuthToken = function () {
 };
 // --------------------------------------------------
 
+
+// STATICS ------------------------------------------
+UserSchema.statics.findByToken = function (token) {
+    const User = this;
+    
+    try {
+
+    let decodedInfo = jwt.verify(token, "thisIsTheMostSecretStringEver");
+
+    return User.findOne({ _id: decodedInfo._id });
+    } catch (error) {
+        return;    
+    }
+};
+// --------------------------------------------------
+
+
 // MODEL --------------------------------------------
 const User = model("User", UserSchema);
 

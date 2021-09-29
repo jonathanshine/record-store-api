@@ -13,16 +13,17 @@ import {
 import { createOrder, deleteOrder, getOrder, getOrders, updateOrder } from '../controllers/ordersControllers.js';
 
 import { userValidationRules, userValidationErrorHandling } from "../middleware/validation/userValidation.js";
+import auth from "../middleware/authentication/authentication.js"
 
-router.route("/").get(getUsers).post(
+router.route("/").get(auth, getUsers).post(
     userValidationRules(),
     userValidationErrorHandling,
     createUser
 );
 router.route("/login").post(loginUser);
-router.route("/:id").get(getUser).delete(deleteUser).put(updateUser);
-router.route("/:id/orders").get(getOrders).post(createOrder);
-router.route("/:id/orders/:id").get(getOrder).delete(deleteOrder).put(updateOrder);
+router.route("/:id").get(auth, getUser).delete(auth, deleteUser).put(auth, updateUser);
+router.route("/:id/orders").get(auth, getOrders).post(auth, createOrder);
+router.route("/:id/orders/:id").get(auth, getOrder).delete(auth, deleteOrder).put(auth, updateOrder);
 
 
 export default router;
