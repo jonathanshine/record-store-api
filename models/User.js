@@ -2,6 +2,7 @@
 import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 import jwt from "jsonwebtoken";
+import config from '../config/config';
 // --------------------------------------------------
 
 
@@ -106,7 +107,7 @@ UserSchema.virtual("age").get(function() {
 UserSchema.methods.generateAuthToken = function () {
     const user = this;
 
-    const token = jwt.sign({ _id: user._id }, "thisIsTheMostSecretStringEver", { expiresIn: "2d" });
+    const token = jwt.sign({ _id: user._id }, config.secretKey, { expiresIn: "2d" });
     
     console.log(`We created a token for user ${user._id} --> ${token}`);
 
@@ -121,7 +122,7 @@ UserSchema.statics.findByToken = function (token) {
     
     try {
 
-    let decodedInfo = jwt.verify(token, "thisIsTheMostSecretStringEver");
+    let decodedInfo = jwt.verify(token, config.secretKey);
 
     return User.findOne({ _id: decodedInfo._id });
     } catch (error) {
