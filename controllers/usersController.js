@@ -69,9 +69,16 @@ export const loginUser = async (req, res, next) => {
         const { email, password} = req.body;
         const user = await User.findOne({ email }).populate("cart.record");
         if (!user) throw new createError(404, `Email not valid`)
-
         if (user.password !== password) throw new createError(404, `Password not valid`);
-        res.send( user );
+
+        const token = user.generateAuthToken();
+
+        res.cookie("token", token, {
+            httpOnly: true,
+            expires: new Date(Date.now() + 172800000),
+            sameSite: "lax",
+            secure: false
+        } ).send( user );
     } catch (error) {
         next( error );
     }

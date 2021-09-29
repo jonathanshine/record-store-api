@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.js",
     "prod": "NODE_ENV=production nodemon server.js",
-    "seed-local": "node seed/seed.js",
+    "seed-dev": "node seed/seed.js",
     "seed-prod": "NODE_ENV=production node seed/seed.js"
   },
   "author": "",
@@ -19,6 +19,7 @@
     "express": "^4.17.1",
     "express-validator": "^6.12.1",
     "http-errors": "^1.7.2",
+    "jsonwebtoken": "^8.5.1",
     "lowdb": "^2.1.0",
     "mongoose": "^5.13.8",
     "uuid": "^8.3.2"

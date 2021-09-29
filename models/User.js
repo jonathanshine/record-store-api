@@ -1,7 +1,8 @@
 // IMPORTS ------------------------------------------
 import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
-
+import jwt from "jsonwebtoken";
+// --------------------------------------------------
 
 
 // SCHEMA -------------------------------------------
@@ -101,6 +102,17 @@ UserSchema.virtual("age").get(function() {
 // --------------------------------------------------
 
 
+// METHODS ------------------------------------------
+UserSchema.methods.generateAuthToken = function () {
+    const user = this;
+
+    const token = jwt.sign({ _id: user._id }, "thisIsTheMostSecretStringEver", { expiresIn: "2d" });
+    
+    console.log(`We created a token for user ${user._id} --> ${token}`);
+
+    return token;
+};
+// --------------------------------------------------
 
 // MODEL --------------------------------------------
 const User = model("User", UserSchema);
