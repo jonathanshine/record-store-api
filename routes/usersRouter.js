@@ -7,7 +7,8 @@ import {
     createUser,
     deleteUser,
     updateUser,
-    loginUser
+    loginUser,
+    verifyCookie
 } from '../controllers/usersController.js';
 
 import { createOrder, deleteOrder, getOrder, getOrders, updateOrder } from '../controllers/ordersControllers.js';
@@ -21,6 +22,7 @@ router.route("/").get(auth, getUsers).post(
     createUser
 );
 router.route("/login").post(loginUser);
+router.route("/auth").post(auth, verifyCookie);
 router.route("/:id").get(auth, getUser).delete(auth, deleteUser).put(auth, updateUser);
 router.route("/:id/orders").get(auth, getOrders).post(auth, createOrder);
 router.route("/:id/orders/:id").get(auth, getOrder).delete(auth, deleteOrder).put(auth, updateOrder);

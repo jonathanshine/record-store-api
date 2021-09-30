@@ -38,15 +38,15 @@ const AddressSchema = new Schema({
 const UserSchema = new Schema({
     username: {
         type: String,
-        validate: {
-            validator: async (value) => {
-                const User = mongoose.model("User");
-                const user = await User.findOne({ username: value} );
-                if (user) return false;
-                else return true;
-            },
-            message: props => `${props.value} is already taken!`
-        },
+        // validate: {
+        //     validator: async (value) => {
+        //         const User = mongoose.model("User");
+        //         const user = await User.findOne({ username: value} );
+        //         if (user) return false;
+        //         else return true;
+        //     },
+        //     message: props => `${props.value} is already taken!`
+        // },
         required: [ true, "Username name is required" ],
         unique: true
     },
@@ -112,13 +112,13 @@ UserSchema.pre("save", function(next) {
     next();
 });
 
-UserSchema.pre("findOneAndUpdate", function() {
-    const user = this;
-    if(user.isModified("password")) {
-        user.password = bcrypt.hashSync(user.password, 10);
-        console.log("I AM THE USER TO BE UPDATED -->", user);  
-    };
-});
+// UserSchema.pre("findOneAndUpdate", function() {
+//     const user = this;
+//     if(user.isModified("password")) {
+//         user.password = bcrypt.hashSync(user.password, 10);
+//         console.log("I AM THE USER TO BE UPDATED -->", user);  
+//     };
+// });
 // --------------------------------------------------
 
 

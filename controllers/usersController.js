@@ -30,7 +30,15 @@ export const createUser = async (req, res, next)=> {
         const body = req.body;
         const user = await User.create( body );
         user.password = undefined;
-        res.json( user );
+        
+        const token = user.generateAuthToken();
+
+        res.cookie("token", token, {
+            httpOnly: true,
+            expires: new Date(Date.now() + 172800000),
+            sameSite: config.env == "production" ? "None" : "lax",
+            secure: config.env == "production" ? true : false
+        } ).send( user );
     } catch (error) {
         next( error );
     }
@@ -40,18 +48,18 @@ export const updateUser = async (req, res, next) => {
     try {
         const { id } = req.params;
         const newData = req.body;
-        // let user = await User.findByIdAndUpdate( 
-        //     id,
-        //     newData,
-        //     { new: true}
-        //     ).populate("cart.record");
-        let user = await User.findById( id );
-        Object.assign(user, newData);
-        const userUpdated = await user.save();
+        let user = await User.findByIdAndUpdate( 
+            id,
+            newData,
+            { new: true}
+            ).populate("cart.record");
+        // let user = await User.findById( id );
+        // Object.assign(user, newData);
+        // const userUpdated = await user.save();
         if (!user) throw new createError(404, `No user with id --> ${id} was found`);
         res.send( user );
-        if (!userUpdated) throw new createError(404, `No user with id --> ${id} was found`);
-        res.send( userUpdated );
+        // if (!userUpdated) throw new createError(404, `No user with id --> ${id} was found`);
+        // res.send( userUpdated );
     } catch (error) {
         next( error );
     }
@@ -93,4 +101,8 @@ export const loginUser = async (req, res, next) => {
     } catch (error) {
         next( error );
     }
+};
+
+export const verifyCookie = async (req, res, next) => {
+    res.send(req.user);
 }
