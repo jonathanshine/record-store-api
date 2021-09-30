@@ -50,6 +50,8 @@ export const updateUser = async (req, res, next) => {
         const userUpdated = await user.save();
         if (!user) throw new createError(404, `No user with id --> ${id} was found`);
         res.send( user );
+        if (!userUpdated) throw new createError(404, `No user with id --> ${id} was found`);
+        res.send( userUpdated );
     } catch (error) {
         next( error );
     }

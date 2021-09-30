@@ -105,12 +105,11 @@ UserSchema.virtual("age").get(function() {
 
 
 // HASHING ------------------------------------------
-UserSchema.pre("save", function() {
+UserSchema.pre("save", function(next) {
     const user = this;
-    if(user.isModified("password")) {
-        user.password = bcrypt.hashSync(user.password, 10);
-        console.log("I AM THE USER TO BE SAVED -->", user);  
-    };
+    if(!user.isModified("password")) return next();
+    user.password = bcrypt.hashSync(user.password, 10);
+    next();
 });
 
 UserSchema.pre("findOneAndUpdate", function() {
