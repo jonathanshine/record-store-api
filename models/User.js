@@ -1,8 +1,9 @@
 // IMPORTS ------------------------------------------
+import jwt from "jsonwebtoken";
+import config from '../config/config.js';
+import bcrypt from "bcryptjs";
 import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
-import jwt from "jsonwebtoken";
-import config from '../config/config';
 // --------------------------------------------------
 
 
@@ -98,6 +99,25 @@ UserSchema.virtual("age").get(function() {
     if (this.birthday) {
     const dateInMil = new Date() - this.birthday;
     return Math.floor( dateInMil / 31536000000 );
+    };
+});
+// --------------------------------------------------
+
+
+// HASHING ------------------------------------------
+UserSchema.pre("save", function() {
+    const user = this;
+    if(user.isModified("password")) {
+        user.password = bcrypt.hashSync(user.password, 10);
+        console.log("I AM THE USER TO BE SAVED -->", user);  
+    };
+});
+
+UserSchema.pre("findOneAndUpdate", function() {
+    const user = this;
+    if(user.isModified("password")) {
+        user.password = bcrypt.hashSync(user.password, 10);
+        console.log("I AM THE USER TO BE UPDATED -->", user);  
     };
 });
 // --------------------------------------------------

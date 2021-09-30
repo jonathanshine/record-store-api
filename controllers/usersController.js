@@ -2,6 +2,7 @@
 import createError from 'http-errors';
 import User from '../models/User.js';
 import config from '../config/config.js';
+import bcrypt from "bcryptjs";
 // --------------------------------------------------
 
 export const getUsers = async (req, res, next) => {
@@ -39,13 +40,16 @@ export const updateUser = async (req, res, next) => {
     try {
         const { id } = req.params;
         const newData = req.body;
-        const user = await User.findByIdAndUpdate( 
-            id,
-            newData,
-            { new: true}
-            ).populate("cart.record");
+        // let user = await User.findByIdAndUpdate( 
+        //     id,
+        //     newData,
+        //     { new: true}
+        //     ).populate("cart.record");
+        let user = await User.findById( id );
+        Object.assign(user, newData);
+        const userUpdated = await user.save();
         if (!user) throw new createError(404, `No user with id --> ${id} was found`);
-        res.json( user );
+        res.send( user );
     } catch (error) {
         next( error );
     }
@@ -70,7 +74,11 @@ export const loginUser = async (req, res, next) => {
         const { email, password} = req.body;
         const user = await User.findOne({ email }).populate("cart.record");
         if (!user) throw new createError(404, `Email not valid`)
-        if (user.password !== password) throw new createError(404, `Password not valid`);
+        
+
+        const passwordIsValid = bcrypt.compareSync(password, user.password);
+        console.log("Are the hash and the pass matching --> ", passwordIsValid);
+        if(!passwordIsValid) next(createError(404, "Password is not valid"));
 
         const token = user.generateAuthToken();
 
