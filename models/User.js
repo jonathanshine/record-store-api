@@ -132,7 +132,7 @@ UserSchema.methods.generateAuthToken = function () {
 
     const token = jwt.sign({ _id: user._id }, config.secretKey, { expiresIn: "2d" });
     
-    console.log(`We created a token for user ${user._id} --> ${token}`);
+    console.log(`We created a cookie token for user ${user._id} --> ${token}`);
 
     return token;
 };
@@ -142,7 +142,7 @@ UserSchema.methods.generateVerificationToken = function () {
 
     const token = jwt.sign({ _id: user._id, email: user.email }, config.verificationSecretKey, { expiresIn: "7d" });
     
-    console.log(`We created a token for user ${user._id} --> ${token}`);
+    console.log(`We created a verification token for user ${user._id} --> ${token}`);
 
     return token;
 };

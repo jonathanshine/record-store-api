@@ -28,31 +28,34 @@ export const getUser = async (req, res, next) => {
 export const createUser = async (req, res, next)=> {
     const info = req.body;
     try {
-        // const body = req.body;
-        // const user = await User.create( body );
-        // user.password = undefined;
-        
-        // const token = user.generateAuthToken();
-
         const user = new User( info );
-        const token = user.generateAuthToken();
         const verificationToken = user.generateVerificationToken();
-
         user.verified.token = verificationToken;
-        // sendVerificationEmail();
 
-        await user.save();
+        const savedUser = await user.save();
+        req.user = savedUser;
+        next();
+    } catch (error) {
+        next( error );
+    };
+};
 
+
+export const sendUser = async (req, res, next)=> { 
+    try {    
+        const token = req.user.generateAuthToken();
+       
         res.cookie("token", token, {
             httpOnly: true,
             expires: new Date(Date.now() + 172800000),
             sameSite: config.env == "production" ? "None" : "lax",
             secure: config.env == "production" ? true : false
-        } ).send( user );
+        } ).send( req.user );
     } catch (error) {
         next( error );
     }
 };
+
 
 export const updateUser = async (req, res, next) => {
     try {

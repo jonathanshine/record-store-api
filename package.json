@@ -23,6 +23,7 @@
     "jsonwebtoken": "^8.5.1",
     "lowdb": "^2.1.0",
     "mongoose": "^5.13.8",
+    "nodemailer": "^6.6.5",
     "uuid": "^8.3.2"
   },
   "engines": {
