@@ -16,7 +16,7 @@ const sendEmail = async (req, res, next) => {
         subject: "Hello ✔", // Subject line
         html: `
         <h5>Record Store API</h5>
-        <p>Please click <a href="${config.frontendOrigin}/profile/verify-email/${req.user.verified.token}" target="_blank">here</a></p>
+        <p>Please click <a href="${config.frontendOrigin}/profile/verify-email/${req.user.verified.token}" target="_blank">here</a> to verify your account,</p>
         `
     };
 

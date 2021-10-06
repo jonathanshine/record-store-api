@@ -162,6 +162,19 @@ UserSchema.statics.findByToken = function (token) {
         return;    
     }
 };
+
+UserSchema.statics.verifyByToken = function (token) {
+    const User = this;
+    
+    try {
+
+    let decodedInfo = jwt.verify(token, config.verificationSecretKey);
+
+    return User.findOne({ _id: decodedInfo._id, email: decodedInfo.email });
+    } catch (error) {
+        return;    
+    }
+};
 // --------------------------------------------------
 
 

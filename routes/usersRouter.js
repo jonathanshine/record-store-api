@@ -9,7 +9,8 @@ import {
     updateUser,
     loginUser,
     verifyCookie,
-    sendUser
+    sendUser,
+    verifyEmail
 } from '../controllers/usersController.js';
 
 import { createOrder, deleteOrder, getOrder, getOrders, updateOrder } from '../controllers/ordersControllers.js';
@@ -17,6 +18,7 @@ import { createOrder, deleteOrder, getOrder, getOrders, updateOrder } from '../c
 import { userValidationRules, userValidationErrorHandling } from "../middleware/validation/userValidation.js";
 import auth from "../middleware/authentication/authentication.js";
 import sendEmail from "../middleware/mailer/setup.js";
+import verif from "../middleware/authentication/verification.js";
 
 router.route("/").get(auth, getUsers).post(
     userValidationRules(),
@@ -25,6 +27,8 @@ router.route("/").get(auth, getUsers).post(
     sendEmail,
     sendUser
 );
+
+router.route("/verify-email/:token").post(verif, verifyEmail)
 router.route("/login").post(loginUser);
 router.route("/auth").post(auth, verifyCookie);
 router.route("/:id").get(auth, getUser).delete(auth, deleteUser).put(auth, updateUser);
