@@ -19,7 +19,8 @@ import auth from "../middleware/authentication/authentication.js"
 router.route("/").get(auth, getUsers).post(
     userValidationRules(),
     userValidationErrorHandling,
-    createUser
+    createUser,
+    // sendEmail()
 );
 router.route("/login").post(loginUser);
 router.route("/auth").post(auth, verifyCookie);

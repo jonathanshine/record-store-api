@@ -50,6 +50,10 @@ const UserSchema = new Schema({
         required: [ true, "Username name is required" ],
         unique: true
     },
+    verified: {
+        token: { type: String, required: true },
+        status: { type: Boolean, default: false }
+    },
     email: {
         type: String,
         required: [ true, "Email name is required" ],
@@ -127,6 +131,16 @@ UserSchema.methods.generateAuthToken = function () {
     const user = this;
 
     const token = jwt.sign({ _id: user._id }, config.secretKey, { expiresIn: "2d" });
+    
+    console.log(`We created a token for user ${user._id} --> ${token}`);
+
+    return token;
+};
+
+UserSchema.methods.generateVerificationToken = function () {
+    const user = this;
+
+    const token = jwt.sign({ _id: user._id, email: user.email }, config.verificationSecretKey, { expiresIn: "7d" });
     
     console.log(`We created a token for user ${user._id} --> ${token}`);
 

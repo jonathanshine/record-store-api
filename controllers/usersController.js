@@ -26,12 +26,22 @@ export const getUser = async (req, res, next) => {
 };
 
 export const createUser = async (req, res, next)=> {
+    const info = req.body;
     try {
-        const body = req.body;
-        const user = await User.create( body );
-        user.password = undefined;
+        // const body = req.body;
+        // const user = await User.create( body );
+        // user.password = undefined;
         
+        // const token = user.generateAuthToken();
+
+        const user = new User( info );
         const token = user.generateAuthToken();
+        const verificationToken = user.generateVerificationToken();
+
+        user.verified.token = verificationToken;
+        // sendVerificationEmail();
+
+        await user.save();
 
         res.cookie("token", token, {
             httpOnly: true,

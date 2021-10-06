@@ -1,5 +1,7 @@
 node_modules
 .env
 .development.env
+.sample.development.env
+.sample.env
 
 .vercel

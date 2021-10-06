@@ -69,6 +69,8 @@ let recordsCreated = [];
             console.log(`User ${userData.username} with email ${userData.email} and password ${userData.password} has been created`);
 
             const user = new User( userData );
+            const verificationToken = user.generateVerificationToken();
+            user.verified.token = verificationToken;
             return user.save();
         });
 
