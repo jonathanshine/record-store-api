@@ -10,7 +10,8 @@ import {
     loginUser,
     verifyCookie,
     sendUser,
-    verifyEmail
+    verifyEmail,
+    signUpGoogleUser
 } from '../controllers/usersController.js';
 
 import { createOrder, deleteOrder, getOrder, getOrders, updateOrder } from '../controllers/ordersControllers.js';
@@ -29,7 +30,8 @@ router.route("/").get(auth, getUsers).post(
     sendUser
 );
 
-router.route("/verify-email/:token").post(verif, verifyEmail)
+router.route("/googleSignUp").post(signUpGoogleUser);
+router.route("/verify-email/:token").post(verif, verifyEmail);
 router.route("/login").post(loginUser);
 router.route("/auth").post(auth, verifyCookie);
 router.route("/:id").get(auth, getUser).delete(auth, deleteUser).put(auth, updateUser);

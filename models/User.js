@@ -54,6 +54,7 @@ const UserSchema = new Schema({
         token: { type: String, required: true },
         status: { type: Boolean, default: false }
     },
+    googleId : { type: String },
     email: {
         type: String,
         required: [ true, "Email name is required" ],
