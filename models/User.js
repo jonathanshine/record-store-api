@@ -72,6 +72,11 @@ const UserSchema = new Schema({
         type: String,
         required: [ true, "Last name is required" ]
     },
+    role: {
+        type: String,
+        enum: ['Admin', 'User'],
+        default: 'User'
+    },
     birthday: {
         type: Date,
         required: false

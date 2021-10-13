@@ -63,7 +63,8 @@ let recordsCreated = [];
                 password: faker.internet.password(),
                 firstName: faker.name.firstName(),
                 lastName: faker.name.lastName(),
-                birthday: faker.date.between("1970", "2005")
+                birthday: faker.date.between("1970", "2005"),
+                role: faker.random.arrayElement(['Admin', 'User'])
             };
 
             console.log(`User ${userData.username} with email ${userData.email} and password ${userData.password} has been created`);

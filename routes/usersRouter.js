@@ -21,8 +21,9 @@ import auth from "../middleware/authentication/authentication.js";
 import sendEmail from "../middleware/mailer/setup.js";
 import verif from "../middleware/authentication/verification.js";
 import isUserVerified from '../middleware/authentication/isUserVerified.js';
+import isAdmin from '../middleware/authentication/isAdmin.js';
 
-router.route("/").get(auth, getUsers).post(
+router.route("/").get(auth, isAdmin, getUsers).post(
     userValidationRules(),
     userValidationErrorHandling,
     createUser,
@@ -36,7 +37,7 @@ router.route("/login").post(loginUser);
 router.route("/auth").post(auth, verifyCookie);
 router.route("/:id").get(auth, getUser).delete(auth, deleteUser).put(auth, updateUser);
 router.route("/:id/orders").get(auth, getOrders).post(auth, isUserVerified, createOrder);
-router.route("/:id/orders/:id").get(auth, getOrder).delete(auth, deleteOrder).put(auth, updateOrder);
+router.route("/:id/orders/:id").get(auth, getOrder).delete(auth, isAdmin, deleteOrder).put(auth, isAdmin, updateOrder);
 
 
 export default router;
